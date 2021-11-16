@@ -23,7 +23,7 @@ type Valuer func() (key string, val interface{})
 func Caller(depth int) Valuer {
 	return func() (string, interface{}) {
 		_, file, line, _ := runtime.Caller(depth)
-		if strings.LastIndex(file, "github.com/driftingboy/tsdb/logger") > 0 {
+		if strings.LastIndex(file, "tress-plan/logger") > 0 {
 			_, file, line, _ = runtime.Caller(depth + 1)
 		}
 		// _ = strings.LastIndexByte(file, '/')

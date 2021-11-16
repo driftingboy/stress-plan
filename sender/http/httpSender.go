@@ -38,13 +38,14 @@ func NewSender(opts ...Option) *Sender {
 // 发送请求，result用于接收请求结果
 func (s *Sender) Send(ctx context.Context, req *sender.Request, result chan<- *sender.Result) {
 	// 处理超时情况
-	ctx, cancel := context.WithTimeout(ctx, time.Second*s.ttl)
+	ctx, cancel := context.WithTimeout(ctx, s.ttl)
 	defer cancel()
 
 	// 构建请求
 	body := bytes.NewReader(req.Body)
 	httpReq, err := http.NewRequestWithContext(ctx, req.Method, req.Url, body)
 	if err != nil {
+		// TODO 需要退出通道，监听退出。gorutione 同时退出
 		s.logger.Log(logger.Error, "err", err.Error())
 		return
 	}

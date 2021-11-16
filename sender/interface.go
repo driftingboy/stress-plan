@@ -16,6 +16,7 @@ type Interface interface {
 }
 
 type Request struct {
+	Typ     string
 	Method  string
 	Url     string
 	Headers map[string]string

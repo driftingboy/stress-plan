@@ -27,7 +27,7 @@ func WithHttp2() Option {
 	return func(s *Sender) {
 		if s.cli != nil && s.cli.Transport != nil {
 			if tr, ok := s.cli.Transport.(*http.Transport); ok {
-				http2.ConfigureTransport(tr)
+				_ = http2.ConfigureTransport(tr)
 				s.cli.Transport = tr
 			}
 		}

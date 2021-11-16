@@ -30,7 +30,7 @@ var (
 		Transport: &http.Transport{
 			DialContext: (&net.Dialer{
 				// 限制建立连接(Dial)的时间
-				Timeout: 30 * time.Second,
+				Timeout: 60 * time.Second,
 				// 设置keepalive失效时间
 				KeepAlive: 60 * time.Second,
 			}).DialContext,
@@ -48,7 +48,7 @@ var (
 func GetLongConnHttp2() *http.Client {
 	tr := &http.Transport{
 		DialContext: (&net.Dialer{
-			Timeout:   30 * time.Second,
+			Timeout:   60 * time.Second,
 			KeepAlive: 60 * time.Second,
 		}).DialContext,
 		TLSClientConfig: &tls.Config{
