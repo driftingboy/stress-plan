@@ -17,7 +17,7 @@ var (
 			DisableKeepAlives: true,
 			// DisableCompression: true,
 			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: false,
+				InsecureSkipVerify: true,
 			},
 			MaxIdleConns:        0,
 			MaxConnsPerHost:     100,
@@ -37,9 +37,9 @@ var (
 			TLSClientConfig: &tls.Config{
 				InsecureSkipVerify: false,
 			},
-			MaxIdleConns:        0, // 0 表示不限制
-			MaxConnsPerHost:     100,
-			MaxIdleConnsPerHost: 100,
+			MaxIdleConns:    0, // 0 表示不限制
+			MaxConnsPerHost: 400,
+			IdleConnTimeout: 90 * time.Second,
 		},
 	}
 	DefaultLongConnHttp2 = GetLongConnHttp2()

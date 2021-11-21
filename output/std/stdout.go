@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"stress-plan/helper"
 	"stress-plan/sender"
 )
 
@@ -14,26 +15,27 @@ func (s *StdOut) Write(data *sender.StatisticData) (err error) {
 	if data == nil {
 		return errors.New("统计数据为空！")
 	}
+
 	fmt.Fprintf(os.Stdout, `
-	==================== 统计结果 =================
-	并发数：%d
+	Stressing test in %d goroutine %d request
 
-	成功：%d
-	失败：%d
-	超时：%d
+		Success: %d failed: %d timeout: %d
 
-	请求总耗时：%v s
-	请求实际时长：%v s
-	平均时长：%v ms
-	最大时长：%v ms
-	最小时长：%v ms
+		Req total Duration：%v s
+		Req Actual Time：%v s
+		avg    max    min
+		%v ms  %v ms  %v ms
 
-	qps：%v
-	详情：%s`,
-		data.Concurrent,
+		RequestsPeerSec: %v
+		TransferPeerSec: %v
+
+	%d requests completed, %s Flow transfer in %v seconds
+	Detail：%s`,
+		data.Concurrent, data.SuccessNum+data.FailureNum,
 		data.SuccessNum, data.FailureNum, data.TimeOutNum,
-		data.ReqTotalTime.Seconds(), data.ReqActualTime.Seconds(), data.AverageTime.Milliseconds(),
-		data.MaxTime.Milliseconds(), data.MinTime.Milliseconds(),
-		data.QPS, data.Details)
+		data.ReqTotalTime.Seconds(), data.ReqActualTime.Seconds(), data.AverageTime.Milliseconds(), data.MaxTime.Milliseconds(), data.MinTime.Milliseconds(),
+		data.RequestPeerSec, helper.BytesAddUnit(int64(data.TransferBytesPeerSec)),
+		data.SuccessNum+data.FailureNum, helper.BytesAddUnit(data.TransferBytes), data.ReqActualTime.Seconds(),
+		data.Details)
 	return nil
 }

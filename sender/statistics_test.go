@@ -25,17 +25,19 @@ func TestStatisticalResults(t *testing.T) {
 	}(ch)
 	got := StatisticalResults(2, ch)
 	want := &StatisticData{
-		Concurrent:    2,
-		SuccessNum:    3,
-		FailureNum:    2,
-		TimeOutNum:    1,
-		ReqTotalTime:  2800 * time.Millisecond,
-		ReqActualTime: 1400 * time.Millisecond,
-		AverageTime:   560 * time.Millisecond,
-		MaxTime:       1200 * time.Millisecond,
-		MinTime:       100 * time.Millisecond,
-		QPS:           5 / 1.4,
-		Details:       "code: 0, count 3;\ncode: 401, count 1;\ncode: 500, count 1;\n",
+		Concurrent:           2,
+		SuccessNum:           3,
+		FailureNum:           2,
+		TimeOutNum:           1,
+		ReqTotalTime:         2800 * time.Millisecond,
+		ReqActualTime:        1400 * time.Millisecond,
+		AverageTime:          560 * time.Millisecond,
+		MaxTime:              1200 * time.Millisecond,
+		MinTime:              100 * time.Millisecond,
+		TransferBytes:        2500,
+		TransferBytesPeerSec: 2500 / 1.4,
+		RequestPeerSec:       5 / 1.4,
+		Details:              "code: 0, count 3;\ncode: 401, count 1;\ncode: 500, count 1;\n",
 	}
 	assert.Equal(t, want, got)
 

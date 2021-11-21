@@ -57,9 +57,9 @@ func (r ReqTemplate) GenerateReq() (*sender.Request, error) {
 	isHttp := strings.Contains(url, "https://") || strings.Contains(url, "http://")
 	if isHttp {
 		req.Typ = "http"
-		req.Method = "Get" // default method
+		req.Method = "GET" // default method
 		if i := strings.Index(url, HttpMethodSplitFlag); i != -1 {
-			req.Method = url[:i]
+			req.Method = strings.ToUpper(url[:i])
 			url = url[i+1:]
 		}
 	} else {

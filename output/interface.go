@@ -5,6 +5,8 @@ import (
 	"stress-plan/sender"
 )
 
+// func Format()
+// func Print()
 type Interface interface {
 	// ReaderWithUnmarshal
 	// WriterWithMarshal

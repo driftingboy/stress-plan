@@ -21,7 +21,7 @@ func Test_Task(t *testing.T) {
 	task := NewTask(sender, out, log)
 
 	rt := &ReqTemplate{
-		url:     "Get@https://stackoverflow.com/questions/43321894/context-timeout-implementation-on-every-request-using-golang",
+		url:     "GET@https://www.baidu.com/",
 		headers: map[string]string{
 			// "Accept":          "application/json, text/javascript, */*; q=0.01",
 			// "Connection":      "keep-alive",
@@ -35,7 +35,7 @@ func Test_Task(t *testing.T) {
 	}
 	start := time.Now()
 	fmt.Println("压测任务开始...")
-	if err := task.Run(1, 4, rt); err != nil {
+	if err := task.Run(5, 40, rt); err != nil {
 		log.Log(logger.Error, "统计错误", err.Error())
 	}
 	fmt.Printf("\n压测任务耗时：%v \n", time.Since(start))

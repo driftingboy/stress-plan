@@ -18,6 +18,7 @@ type StatisticData struct {
 	SuccessNum int
 	FailureNum int
 	TimeOutNum int
+
 	// 总请求时间
 	ReqTotalTime time.Duration
 	// 实际请求消耗时间 = 总请求时间 / Concurrent
@@ -27,8 +28,12 @@ type StatisticData struct {
 	// 最大、最小请求时间
 	MaxTime time.Duration
 	MinTime time.Duration
-	QPS     float64
-	Details string
+	// 总流量
+	TransferBytes int64
+
+	TransferBytesPeerSec float64
+	RequestPeerSec       float64
+	Details              string
 }
 
 // TODO 起一个协程每1s输出一下进度
@@ -44,6 +49,7 @@ func StatisticalResults(concurrent int, ch <-chan *Result) *StatisticData {
 	sd.Concurrent = concurrent
 	for result := range ch {
 		sd.ReqTotalTime += result.UsedTime
+		sd.TransferBytes += result.ResponseBytes
 
 		if sd.MaxTime < result.UsedTime {
 			sd.MaxTime = result.UsedTime
@@ -67,11 +73,13 @@ func StatisticalResults(concurrent int, ch <-chan *Result) *StatisticData {
 		}
 		statusCodeMap[result.StatusCode]++
 	}
+
 	if sd.SuccessNum+sd.FailureNum > 0 {
 		sd.AverageTime = sd.ReqTotalTime / time.Duration(sd.SuccessNum+sd.FailureNum)
 	}
 	sd.ReqActualTime = sd.ReqTotalTime / time.Duration(sd.Concurrent)
-	sd.QPS = (float64(sd.SuccessNum) + float64(sd.FailureNum)) / sd.ReqActualTime.Seconds()
+	sd.RequestPeerSec = (float64(sd.SuccessNum) + float64(sd.FailureNum)) / sd.ReqActualTime.Seconds()
+	sd.TransferBytesPeerSec = float64(sd.TransferBytes) / sd.ReqActualTime.Seconds()
 
 	// 顺序的写入状态码信息
 	sort.Ints(statusCodes)

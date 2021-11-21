@@ -49,9 +49,10 @@ func (s *Sender) Send(ctx context.Context, req *sender.Request, result chan<- *s
 		s.logger.Log(logger.Error, "err", err.Error())
 		return
 	}
+
 	req.Headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8"
 	for k, v := range req.Headers {
-		req.Headers[k] = v
+		httpReq.Header.Set(k, v)
 	}
 
 	// 结果返回
@@ -73,13 +74,13 @@ func (s *Sender) Send(ctx context.Context, req *sender.Request, result chan<- *s
 			s.logger.Log(logger.Error, "clientErr", err.Error())
 		}
 	}
-	if resp != nil {
-		resBytes = resp.ContentLength
-		if resp.StatusCode == 200 {
-			code = 0
-		} else {
-			code = resp.StatusCode
-		}
+	defer resp.Body.Close()
+
+	resBytes = resp.ContentLength
+	if resp.StatusCode == 200 {
+		code = 0
+	} else {
+		code = resp.StatusCode
 	}
 
 	res := &sender.Result{
