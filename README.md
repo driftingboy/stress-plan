@@ -30,15 +30,16 @@ stress-plan 是使用golang语言编写的轻量级压测工具，有着易用�
 ``` shell
 git clone git@github.com:driftingboy/stress-plan.git
 
-cd ./stress-plan
+cd ./stress-plan/cmd
 
-./stp -c 10 -n 1000  -u https://www.baidu.com/
+./stp run -c 10 -n 1000 -u https://www.baidu.com/
 
 ```
 
 详细用法使用 -h 或 --help 查看
 ``` shell
-go run main.go -h
+./stp -h
+./stp run -h
 ```
 
 ## 场景
