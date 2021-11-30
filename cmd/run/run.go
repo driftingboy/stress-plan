@@ -37,7 +37,7 @@ var (
 
 	// 请求设置
 	url     string
-	body    string
+	body    string // TODO 支持传文件
 	headers map[string]string
 
 	// 统计设置

@@ -32,11 +32,23 @@ git clone git@github.com:driftingboy/stress-plan.git
 
 cd ./stress-plan/cmd
 
-get 请求
 ./stp run -c 10 -n 1000 -u https://www.baidu.com/
 
-post 请求（默认 "Content-Type:application/json"）
+```
+
+如果您需要使用post请求测试, 参考如下
+
+- post 请求（默认 "Content-Type:application/json"）
+```shell
 ./stp run -c 1 -n 1 -u "POST@http://119.3.106.151:10100/v1/app/evidences:new_verify" -b "{ \"brief_content\": \"da11370d639b4c36b7e38a25516aed21c60ab2ac90e4474f89644fdb1dad93c1\", \"verify_type\": \"key\"}"
+```
+
+- 指定 body 类型
+```shell
+./stp run -c 1 -n 1 \
+-H "Content-Type:application/x-www-form-urlencoded" \
+-u "POST@http://119.3.106.151:10100/v1/app/evidences:new_verify" \
+-b "a=a&&b=b"
 
 ```
 
