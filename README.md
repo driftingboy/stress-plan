@@ -32,7 +32,11 @@ git clone git@github.com:driftingboy/stress-plan.git
 
 cd ./stress-plan/cmd
 
+get 请求
 ./stp run -c 10 -n 1000 -u https://www.baidu.com/
+
+post 请求（默认 "Content-Type:application/json"）
+./stp run -c 1 -n 1 -u "POST@http://119.3.106.151:10100/v1/app/evidences:new_verify" -b "{ \"brief_content\": \"da11370d639b4c36b7e38a25516aed21c60ab2ac90e4474f89644fdb1dad93c1\", \"verify_type\": \"key\"}"
 
 ```
 

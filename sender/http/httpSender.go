@@ -50,7 +50,7 @@ func (s *Sender) Send(ctx context.Context, req *sender.Request, result chan<- *s
 		return
 	}
 
-	req.Headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8"
+	req.Headers["Content-Type"] = "application/json"
 	for k, v := range req.Headers {
 		httpReq.Header.Set(k, v)
 	}

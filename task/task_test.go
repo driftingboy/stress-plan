@@ -35,7 +35,7 @@ func Test_Task(t *testing.T) {
 	}
 	start := time.Now()
 	fmt.Println("压测任务开始...")
-	if err := task.Run(5, 40, rt); err != nil {
+	if err := task.Run(1, 10, rt); err != nil {
 		log.Log(logger.Error, "统计错误", err.Error())
 	}
 	fmt.Printf("\n压测任务耗时：%v \n", time.Since(start))
