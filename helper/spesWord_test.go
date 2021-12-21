@@ -6,11 +6,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPeplaceAllSpecialChars(t *testing.T) {
+func TestPeplaceAllSpecialChars(t *testing.T) { // MTY0MDA5MDUwMQ
 	got := PeplaceAllSpecialChars(`{
 				"id":"@UUID",
 				"time":"@Unix",
 				"num":"@Int",
+				"content":"@Base64",
 				"age":"18",
 				"describe":"test replace specail chars",
 				"end":"end-@UUID",

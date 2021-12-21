@@ -6,6 +6,7 @@
 package helper
 
 import (
+	"encoding/base64"
 	"math"
 	"math/rand"
 	"strconv"
@@ -16,6 +17,23 @@ import (
 )
 
 const SpecFlag = "@"
+
+// TODO 移到 convert 实现
+type Base64 string
+
+func (i Base64) Mock() string {
+	// MWQyODRmNjAtNjdiZC00ZTQyLWI4YTktMDhhNWI4NWI5YTYx
+	return base64.URLEncoding.EncodeToString([]byte(guid.New().String()))
+}
+
+func (i Base64) Name() string {
+	return "@Base64"
+}
+
+func (i Base64) Len() int {
+	// int32的最大长度10 2147483647
+	return 48
+}
 
 type Int string
 
@@ -74,10 +92,12 @@ var (
 	integer = new(Int)
 	unix    = new(Unix)
 	uuid    = new(UUID)
+	b64     = new(Base64)
 
-	intName, intNameLen   = integer.Name(), len(intName)
-	unixName, unixNameLen = unix.Name(), len(unixName)
-	uuidName, uuidNameLen = uuid.Name(), len(uuidName)
+	intName, intNameLen       = integer.Name(), len(intName)
+	unixName, unixNameLen     = unix.Name(), len(unixName)
+	uuidName, uuidNameLen     = uuid.Name(), len(uuidName)
+	base64Name, base64NameLen = b64.Name(), len(base64Name)
 )
 
 // 解析特殊字符 special characters
@@ -120,6 +140,9 @@ func IndexSpecialChars(data string) (index int, m Mocker) {
 			}
 			if isUUID := (i+uuidNameLen <= dataLen && data[i:i+uuidNameLen] == uuidName); isUUID {
 				return i, uuid
+			}
+			if isBase64 := (i+base64NameLen <= dataLen && data[i:i+base64NameLen] == base64Name); isBase64 {
+				return i, b64
 			}
 		}
 	}
