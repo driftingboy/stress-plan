@@ -66,7 +66,7 @@ func RunCMD() *cobra.Command {
 	flags.Uint64VarP(&totalNumber, "number", "n", 1, "请求数总量")
 
 	flags.StringVarP(&url, "url", "u", "", "压测地址, e.g. 'GET@https://www.baidu.com/'")
-	flags.StringVarP(&body, "body", "b", "", "请求体，用于http请求")
+	flags.StringVarP(&body, "body", "d", "", "请求体，用于http请求")
 	flags.StringToStringVarP(&headers, "header", "H", make(map[string]string), "自定义头信息 e.g. -H 'Content-Type: application/json'")
 
 	flags.BoolVarP(&isHttp2, "http2", "", false, "是否开http2.0")

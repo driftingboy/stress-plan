@@ -50,6 +50,11 @@ cd ./stress-plan/cmd
 -u "POST@http://119.3.106.151:10100/v1/app/evidences:new_verify" \
 -b "a=a&&b=b"
 
+
+mock 数据
+./stp run -c 20 -n 50 -u POST@"http://xxxx:1000/v1/app/evidences" -H "accept=application/json" -H "Authorization=Bearer eyJhbGciOiJIUzUxMiJ1.eyJleHAiOjE2NDAwOTUzNDYsImlhdCI6MTY0MDA4ODE0NiwianRpIjoianI1NnZxanluImtxN3AiLCJzdWIiOiJ1aWQtdGVuYW50In0.y-xNb2DDCi2cU1JQlO9HAxoU_AyjYha8I3wfcv5x9dBnDVLwgDSdzIYl9BlzHyww3fOIj1VImA-w26n2LMPATQ" -H "Content-Type= application/json" -b "{ \"tenant_id\": \"tid-yuhu1\", \"title\": \"stress-test-01\", \"content\": \"@Base64\", \"evidence_type\": \"text\"}"
+
+cd c./stp run -c 20 -n 2000 -u POST@"http://console.yuhu.tech/api/v1/app/evidences" -H "accept=application/json" -H "Authorization=Bearer eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2NDYzMDM3MDcsImlhdCI6MTY0NjI5NjUwNywianRpIjoiamx4cDE1NzU5eG8yNDIiLCJzdWIiOiJ1aWQtdGVuYW50In0.II11OB3CMuNh1lUQDV0A8EZr-Cj9KhB9L1r5dgDMmnXvU3SiqDZyWrCtRhRc9RgrNKGUU_oP0NBUtjoX1sHLRw" -H "Content-Type= application/json" -b "{ \"tenant_id\": \"tid-yuhu1\", \"title\": \"stress-test-20220303\", \"content\": \"@Base64\", \"evidence_type\": \"text\"}"
 ```
 
 详细用法使用 -h 或 --help 查看

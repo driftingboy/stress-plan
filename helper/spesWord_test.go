@@ -12,7 +12,7 @@ func TestPeplaceAllSpecialChars(t *testing.T) { // MTY0MDA5MDUwMQ
 				"time":"@Unix",
 				"num":"@Int",
 				"content":"@Base64",
-				"age":"18",
+				"phone":"@Phone",
 				"describe":"test replace specail chars",
 				"end":"end-@UUID",
 			}`)
@@ -32,9 +32,9 @@ func TestCalcNewStringLength(t *testing.T) {
 		{name: "empty", args: args{old: ""}, wantNewLen: 0, wantReplaceCount: 0},
 		{
 			name:             "base",
-			args:             args{old: `{"id":"@UUID","time":"@Unix","num":"@Int","age":"18","describe":"test replace specail chars","end":"end-@UUID"}`},
-			wantNewLen:       111 + 31 + 5 + 6 + 31,
-			wantReplaceCount: 4,
+			args:             args{old: `{"id":"@UUID","time":"@Unix","num":"@Int","phone":"@Phone","describe":"test replace specail chars","end":"end-@UUID"}`},
+			wantNewLen:       117 + 31 + 5 + 6 + 31 + 5,
+			wantReplaceCount: 5,
 		},
 		{
 			name:             "Boundary-end",
@@ -64,9 +64,10 @@ func TestIndexSpecialChars(t *testing.T) {
 	}{
 		{name: "empty", args: args{data: ""}, wantIndex: -1, wantM: nil},
 		{name: "no Match", args: args{data: "data:123"}, wantIndex: -1, wantM: nil},
-		{name: "interage", args: args{data: "data:@Int"}, wantIndex: 5, wantM: integer},
-		{name: "unix", args: args{data: "data:@Unix"}, wantIndex: 5, wantM: unix},
-		{name: "uuid", args: args{data: "data:@UUID"}, wantIndex: 5, wantM: uuid},
+		{name: "interage", args: args{data: "data:@Int"}, wantIndex: 5, wantM: new(Int)},
+		{name: "unix", args: args{data: "data:@Unix"}, wantIndex: 5, wantM: new(Unix)},
+		{name: "uuid", args: args{data: "data:@UUID"}, wantIndex: 5, wantM: new(UUID)},
+		{name: "uuid", args: args{data: "data:@Phone"}, wantIndex: 5, wantM: new(Phone)},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
